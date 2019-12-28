@@ -17,7 +17,9 @@ class MongoDB {
         this._banco = null
     }
 
-    
+    read(query, skip = 0, limit = 10){
+        return this._banco.find(query).skip(skip).limit(limit)
+    }    
 
     async connect() {
         await Mongoose.connect(URI, { useUnifiedTopology: true, useNewUrlParser: true }, (error) => {
@@ -41,10 +43,7 @@ class MongoDB {
                 type: String,
                 required: true
             },
-            release_date: {
-                type: String,
-                default: new Date()
-            },
+            release_date: String,
             imdb: Number
         })
 
@@ -60,6 +59,8 @@ class MongoDB {
     create(item){
         return this._banco.create(item) 
     }
+    
+    
 }
 
 module.exports = MongoDB
