@@ -17,14 +17,14 @@ class MongoDB {
         this._banco = null
     }
 
+    
+
     async connect() {
         await Mongoose.connect(URI, { useUnifiedTopology: true, useNewUrlParser: true }, (error) => {
             if (error) {
                 console.log('Erro na conexão', error)
                 return;
             }
-            // const connection = Mongoose.connection
-            // connection.once('open', () => console.log('Database up and runnning!')) 
             this._conn = Mongoose.connection
             this._conn.once('open', () => console.log('Database up and runnning!'))
             this.modelDatabase()
@@ -42,15 +42,12 @@ class MongoDB {
                 required: true
             },
             release_date: {
-                type: Date,
+                type: String,
                 default: new Date()
             },
             imdb: Number
         })
 
-        // delete Mongoose.models.Movies 
-        // this._banco = Mongoose.model.Movies 
-        // this._banco = Mongoose.models.Movies ? Mongoose.models.Movies : Mongoose.model('Movies', movieSchema)
         if (Mongoose.models.Movies)
             delete Mongoose.models.Movies
         this._banco = Mongoose.model('Movies', movieSchema)
@@ -60,8 +57,8 @@ class MongoDB {
         return STATUS[this._conn.readyState]
     }
 
-    create(item) {
-
+    create(item){
+        return this._banco.create(item) 
     }
 }
 
