@@ -21,6 +21,10 @@ class MongoDB {
         return this._banco.find(query).skip(skip).limit(limit)
     }    
 
+    delete(id){
+        return this._banco.deleteOne({_id: id}) 
+    }
+
     async connect() {
         await Mongoose.connect(URI, { useUnifiedTopology: true, useNewUrlParser: true }, (error) => {
             if (error) {

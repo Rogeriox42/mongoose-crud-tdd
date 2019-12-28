@@ -41,5 +41,10 @@ describe('Database tests', function(){
         assert.deepEqual(rMovie, MOCK_MOVIE_CREATE) 
     })
 
+    it('Delete Item', async () =>{
+        const [{_id: id}] = await database.read({name: MOCK_MOVIE_CREATE.name}) 
+        const result = await database.delete({_id: id}) 
+        assert.deepEqual(result.n, 1) 
+    })
     
 })
