@@ -17,9 +17,17 @@ class MongoDB {
         this._banco = null
     }
 
+    create(item){
+        return this._banco.create(item) 
+    }
+
     read(query, skip = 0, limit = 10){
         return this._banco.find(query).skip(skip).limit(limit)
-    }    
+    }
+    
+    update(id, item){
+        return this._banco.update({_id: id}, {$set: item})
+    }
 
     delete(id){
         return this._banco.deleteOne({_id: id}) 
@@ -59,12 +67,6 @@ class MongoDB {
     isConnected() {
         return STATUS[this._conn.readyState]
     }
-
-    create(item){
-        return this._banco.create(item) 
-    }
-    
-    
 }
 
 module.exports = MongoDB
